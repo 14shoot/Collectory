@@ -1,6 +1,6 @@
 # Collectory
 
-<!-- Uploading "Collectory-logo.png"... -->
+<img width="512" height="512" alt="Image" src="https://github.com/user-attachments/assets/f22eab3f-1102-408c-9687-7f7f87bd6e41" />
 
 # 概要
 このアプリは、カプセルトやシールなどのコレクションアイテムを所有するユーザー同士が、交換募集や情報共有を行えるコミュニティアプリです。<br>
