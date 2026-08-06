@@ -1,9 +1,28 @@
-# This file should ensure the existence of records required to run the application in every environment (production,
-# development, test). The code here should be idempotent so that it can be executed at any point in every environment.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Example:
-#
-#   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
-#     MovieGenre.find_or_create_by!(name: genre_name)
-#   end
+# bin/rails db:seed で実行される初期データ投入ファイル
+# 何度実行しても同じ結果になるよう find_or_create_by! を使う（冪等性）
+
+category_names = [
+  "トレーディングカード",
+  "ガチャガチャ",
+  "フィギュア",
+  "アクリルスタンド",
+  "缶バッジ",
+  "キーホルダー",
+  "ぬいぐるみ",
+  "シール",
+  "その他"
+]
+
+category_names.each do |name|
+  Category.find_or_create_by!(name: name)
+end
+
+puts "Created #{Category.count} categories"
+
+User.find_or_create_by!(email: "test@example.com") do |user|
+  user.name = "テストユーザー"
+  user.profile = "開発用アカウント"
+  user.encrypted_password = "dummy"
+end
+
+puts "Created #{User.count} users"
