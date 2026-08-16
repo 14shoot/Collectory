@@ -6,14 +6,19 @@ class PostsController < ApplicationController
 
   def create
     @post = Post.new(post_params)
-    @post.user = User.first! # TODO: Devise導入後に current_user に変更
-
+    @post.user = User.first!
+  
     if @post.save
       redirect_to "/top"
     else
+      puts @post.errors.full_messages
       @categories = Category.order(:id)
       render :new, status: :unprocessable_entity
     end
+  end
+
+  def index
+    @posts = Post.all
   end
 
   private
