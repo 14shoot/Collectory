@@ -1,0 +1,14 @@
+<h2>商品名</h2>
+<p><%= @post.body %></p>
+
+<h2>場所</h2>
+<p><%= @post.location %></p>
+
+<h2>画像</h2>
+<% if @post.image.attached? %>
+  <%= image_tag @post.image.variant(resize_to_limit: [300, 300]) %>
+<% end %>
+
+<%= link_to "編集", edit_post_path(@post) %>
+<%= link_to "削除", post_path(@post), method: :delete, data: { confirm: "本当に削除しますか？" } %>
+<%= link_to "戻る", posts_path %>
