@@ -1,13 +1,21 @@
-
-<h1>投稿一覧</h1>
-
-<% @posts.each do |post| %>
-  <p>投稿物</p>
-  <p>商品名：<%= post.body %></p>
-  <p>場所：<%= post.location %></p>
-  <p>画像</p>
-  <% if post.image.attached? %>
-    <%= image_tag post.image.variant(resize_to_limit: [100, 100]) %>
-  <% end %>
-  <span><%= link_to "詳細", post_path(post) %></span>
-<% end %>
+<div class="cover-index">
+  <div class="container d-flex flex-column align-items-center">
+    <div class="row mt-5">
+      <h1 class="font-weight-normal">新規投稿一覧</h1>
+    </div>
+    <div class="row mt-5 index-left w-100">
+      <% @posts.each do |post| %>
+        <div class="one-post col-sm-4- mb-3">
+          <%= link_to post_path(post) do %>
+            <p class="caption">ユーザー名</p>
+            <% if post.image.attached? %>
+              <%= image_tag post.image.variant(resize_to_limit: [300, 200])%><br>
+            <% end %>
+            <p class="caption"><%= post.location %></p>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+    <%= paginate @posts %>
+  </div>
+</div>
