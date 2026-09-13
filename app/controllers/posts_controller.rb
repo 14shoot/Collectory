@@ -1,18 +1,18 @@
 class PostsController < ApplicationController
+  before_action :authenticate_user!, only: [ :new, :create, :edit, :update, :destroy ]
+  before_action :set_categories, only: [ :new, :create, :edit, :update ]
+
   def new
     @post = Post.new
-    @categories = Category.order(:id)
   end
 
   def create
     @post = Post.new(post_params)
-    @post.user = User.first!
-  
+    @post.user = current_user
+
     if @post.save
-      redirect_to "/top"
+      redirect_to posts_path
     else
-      puts @post.errors.full_messages
-      @categories = Category.order(:id)
       render :new, status: :unprocessable_entity
     end
   end
@@ -23,6 +23,8 @@ class PostsController < ApplicationController
 
   def show
     @post = Post.find(params[:id])
+    @comment = Comment.new
+    @comments = @post.comments.page(params[:page]).per(7).reverse_order
   end
 
   def edit
@@ -34,7 +36,7 @@ class PostsController < ApplicationController
     if @post.update(post_params)
       redirect_to post_path(@post)
     else
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
   end
 
@@ -45,6 +47,10 @@ class PostsController < ApplicationController
   end
 
   private
+
+  def set_categories
+    @categories = Category.order(:id)
+  end
 
   def post_params
     params.require(:post).permit(:category_id, :location, :body, :image)
