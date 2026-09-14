@@ -31,7 +31,7 @@ class UsersController < ApplicationController
   end
   
   private
-  def usrt_params
-    params.require(:user).pertmit(:name, :email, :profile, :profile_image)
+  def user_params
+    params.require(:user).permit(:name, :email, :profile, :profile_image)
   end
 end
