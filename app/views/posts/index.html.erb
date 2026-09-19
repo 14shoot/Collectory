@@ -1,7 +1,13 @@
 <div class="cover-index">
   <div class="container d-flex flex-column align-items-center">
     <div class="row mt-5">
-      <h1 class="font-weight-normal">新規投稿一覧</h1>
+      <h1 class="font-weight-normal">投稿一覧</h1>
+    </div>
+    <div class="row mt-3 mb-3 align-self-end">
+      <%= form_with method: :get, local: true do |f| %>
+        <%= f.text_field :search %>
+        <%= f.submit '検索する', name: nil %>
+      <% end %>
     </div>
     <div class="row mt-5 index-left w-100">
       <% @posts.each do |post| %>
@@ -9,7 +15,7 @@
           <%= link_to post_path(post) do %>
             <p class="caption"><%= post.user.name %></p>
             <% if post.image.attached? %>
-              <%= image_tag post.image.variant(resize_to_limit: [300, 200])%><br>
+              <%= image_tag post.image, class: "post-thumb" %><br>
             <% end %>
             <p class="caption"><%= post.location %></p>
             <p class="caotion"><%= "#{post.comments.count} コメント"%></p>

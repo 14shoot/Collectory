@@ -1,0 +1,6 @@
+ja:
+  enums:
+    post:
+      status:
+        published: 投稿
+        draft: 下書き

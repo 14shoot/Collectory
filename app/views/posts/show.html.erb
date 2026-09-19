@@ -15,7 +15,7 @@
       <div class="d-block">
         <p class="caption"><%= @post.user.name %></p>
         <% if @post.image.attached? %>
-          <%= image_tag @post.image.variant(resize_to_limit: [450, 350]) %>,<br>
+          <%= image_tag @post.image, class: "post-detail" %><br>
         <% end %>
         <p class="caption"><%= @post.location %>
           <% if @post.favorited_by?(current_user) %>
