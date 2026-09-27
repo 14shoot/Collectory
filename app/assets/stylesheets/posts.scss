@@ -1,79 +1,183 @@
-@import 'bootstrap';
-
-.cover-index{
-    height: 110%;
-    width: 100%;
-    background-image: url("/assets/index.jpg");
-    background-color: rgba(255,255,255,0.4);
-    background-blend-mode: lighten;
-    background-size: 100% 100%;
-}
-
-.post-thumb {
-    max-width: 300px;
-    max-height: 200px;
-    width: auto;
-    height: auto;
-    object-fit: contain;
-}
-
-.post-detail {
-    max-width: 450px;
-    max-height: 350px;
-    width: auto;
-    height: auto;
-    object-fit: contain;
-}
-
-.one-post img:hover{
-    transform: scale(1.2);
-}
-
-.caption{
-    color: black;
-    font-size: 20px;
-    text-decoration: none;
-}
-
-.index-left{
-    margin-left: 2.5rem!important;
-}
-
-.page a,
-.next a,
-.last a,
-.first a,
-.prev a{
-    color: black;
-    margin-left: 10px;
-    margin-right: 10px;
-}
-
-.page a:hover,
-.next a:hover,
-.last a:hover,
-.first a:hover,
-.prev a:hover{
-    color: black;
-}
-
-.current{
-    font-weight: bold;
-}
-
-.comments-index{
+// 投稿詳細画面全体
+.cover-show {
+    background-color: #f8f9fa;
+    min-height: 100vh;
+    padding-bottom: 50px;
+  }
+  
+  // 左右の白いカード
+  .post-card,
+  .comment-card {
     background-color: #fff;
-    border: 1px #000 solid;
-}
-
-.comments-delete{
-    margin-left: auto;
-}
-
-.comments{
-    margin-left: 50px;
-}
-
-.caption{
+    border: 1px solid #eee;
+    border-radius: 12px;
+    padding: 25px;
+    height: 100%;
+  }
+  
+  // 商品画像
+  .post-detail {
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 25px;
+  }
+  
+  // 商品情報・位置情報
+  .post-info-item {
+    padding: 18px 0;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .post-info-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #777;
+    margin-bottom: 10px;
+  }
+  
+  .post-info-text {
+    font-size: 16px;
+    line-height: 1.7;
     margin-bottom: 0;
-}
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+  
+  // いいね・投稿者
+  .post-info-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    padding: 20px 0;
+    font-size: 15px;
+  }
+  
+  .favorite_btn,
+  .post-info-user a {
+    color: #333;
+    text-decoration: none;
+  }
+  
+  .favorite_btn:hover,
+  .post-info-user a:hover {
+    color: #198754;
+  }
+  
+  // 編集・削除
+  .post-info-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+  }
+  
+  .post-info-actions .btn {
+    flex: 1;
+  }
+  
+  // コメント見出し
+  .comment-title {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 25px;
+  }
+  
+  // コメント入力欄
+  .comment-form {
+    position: relative;
+    margin-bottom: 30px;
+  }
+  
+  .comment-form textarea {
+    background-color: #fff;
+    border: 2px solid #198754;
+    border-radius: 10px;
+    padding: 15px;
+    padding-bottom: 55px;
+    resize: vertical;
+  }
+  
+  .comment-form textarea:focus {
+    border-color: #198754;
+    box-shadow: none;
+  }
+  
+  // 入力欄内の送信ボタン
+  .comment-submit {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+  }
+  
+  // コメント一覧
+  .comments-index {
+    background-color: #f5f6f8;
+    border-radius: 10px;
+    padding: 18px;
+    margin-bottom: 15px;
+  }
+  
+  // コメント投稿者・日付
+  .comment-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .comment-user {
+    font-size: 15px;
+    font-weight: 600;
+    color: #2864a5;
+    text-decoration: none;
+  }
+  
+  .comment-date {
+    font-size: 12px;
+    color: #888;
+  }
+  
+  // コメント本文
+  .comment-body {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  
+  .comment-body p {
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 0;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    min-width: 0;
+  }
+  
+  // コメント削除
+  .comment-delete {
+    font-size: 12px;
+    color: #dc3545;
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+  
+  // スマホ表示
+  @media (max-width: 767px) {
+    .post-card,
+    .comment-card {
+      padding: 18px;
+    }
+  
+    .post-detail {
+      height: 260px;
+    }
+  
+    .comment-title {
+      font-size: 20px;
+    }
+  }
