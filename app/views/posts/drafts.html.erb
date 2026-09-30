@@ -1,0 +1,68 @@
+<div class="cover-new">
+    <div class="container py-5">
+  
+      <div class="new-post-card mx-auto">
+  
+        <h1 class="text-center mb-4">下書き一覧</h1>
+  
+        <% if @posts.any? %>
+  
+          <% @posts.each do |post| %>
+  
+            <div class="draft-item">
+  
+              <div class="draft-main">
+  
+                <% if post.image.attached? %>
+                  <%= image_tag post.image, class: "draft-thumb" %>
+                <% else %>
+                  <%= image_tag "no_image.svg", class: "draft-thumb" %>
+                <% end %>
+  
+                <div class="draft-info">
+  
+                  <p class="draft-title">
+                    <%= post.body %>
+                  </p>
+  
+                  <p class="draft-date">
+                    最終更新：
+                    <%= post.updated_at.strftime("%Y/%m/%d %H:%M") %>
+                  </p>
+  
+                </div>
+  
+              </div>
+  
+              <div class="draft-actions">
+  
+                <%= link_to "編集する",
+                    edit_post_path(post),
+                    class: "btn btn-outline-success" %>
+  
+                <%= link_to "削除する",
+                    post_path(post),
+                    data: {
+                      turbo_method: :delete,
+                      turbo_confirm: "この下書きを削除しますか？"
+                    },
+                    class: "btn btn-outline-danger" %>
+  
+              </div>
+  
+            </div>
+  
+          <% end %>
+  
+        <% else %>
+  
+          <p class="text-center text-muted mb-0">
+            下書きはありません
+          </p>
+  
+        <% end %>
+  
+      </div>
+  
+    </div>
+  </div>

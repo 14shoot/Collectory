@@ -1,28 +1,77 @@
 <div class="cover-index">
-  <div class="container d-flex flex-column align-items-center">
-    <div class="row mt-5">
-      <h1 class="font-weight-normal">投稿一覧</h1>
-    </div>
-    <div class="row mt-3 mb-3 align-self-end">
-      <%= form_with method: :get, local: true do |f| %>
-        <%= f.text_field :search %>
-        <%= f.submit '検索する', name: nil %>
-      <% end %>
-    </div>
-    <div class="row mt-5 index-left w-100">
-      <% @posts.each do |post| %>
-        <div class="one-post col-sm-4- mb-3">
-          <%= link_to post_path(post) do %>
-            <p class="caption"><%= post.user.name %></p>
-            <% if post.image.attached? %>
-              <%= image_tag post.image, class: "post-thumb" %><br>
-            <% end %>
-            <p class="caption"><%= post.location %></p>
-            <p class="caotion"><%= "#{post.comments.count} コメント"%></p>
-          <% end %>
+  <div class="container py-5">
+
+    <h1 class="text-center mb-4">投稿一覧</h1>
+
+    <!-- 検索・カテゴリー絞り込み -->
+    <div class="search-area mb-5">
+      <%= form_with url: posts_path, method: :get, local: true do |f| %>
+
+        <div class="row g-2 justify-content-center">
+
+          <div class="col-md-5">
+            <%= f.text_field :search,
+                value: params[:search],
+                class: "form-control",
+                placeholder: "商品名を検索" %>
+          </div>
+
+          <div class="col-md-4">
+            <%= f.collection_select :category_id,
+                Category.all,
+                :id,
+                :name,
+                { include_blank: "すべてのカテゴリー",
+                  selected: params[:category_id] },
+                { class: "form-select" } %>
+          </div>
+
+          <div class="col-md-2">
+            <%= f.submit "検索する",
+                name: nil,
+                class: "btn btn-success w-100" %>
+          </div>
+
         </div>
+
       <% end %>
     </div>
-    <%= paginate @posts %>
+
+    <!-- 投稿一覧 -->
+    <div class="row g-4">
+
+      <% @posts.each do |post| %>
+
+        <div class="col-6 col-md-4 col-lg-3">
+
+          <%= link_to post_path(post), class: "post-index-link" do %>
+
+            <div class="post-index-card">
+
+              <% if post.image.attached? %>
+                <%= image_tag post.image, class: "post-thumb" %>
+              <% else %>
+                <%= image_tag "no_image.jpg", class: "post-thumb" %>
+              <% end %>
+
+              <p class="post-index-title">
+                <%= post.body %>
+              </p>
+
+            </div>
+
+          <% end %>
+
+        </div>
+
+      <% end %>
+
+    </div>
+
+    <!-- ページネーション -->
+    <div class="d-flex justify-content-center mt-5">
+      <%= paginate @posts %>
+    </div>
+
   </div>
 </div>

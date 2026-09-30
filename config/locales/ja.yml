@@ -1,0 +1,17 @@
+ja:
+  activerecord:
+    attributes:
+      post:
+        body: "商品名"
+        location: "位置情報"
+        image: "画像"
+        category: "カテゴリー"
+        category_id: "カテゴリー"
+        status: "公開状態"
+
+  errors:
+    format: "%{attribute}%{message}"
+    messages:
+      blank: "を入力してください"
+      too_long: "は%{count}文字以内で入力してください"
+      

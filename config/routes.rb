@@ -10,8 +10,12 @@ Rails.application.routes.draw do
   end
 
   resources :posts do
-    resources :comments, only:[:create, :destroy]
-    resource :favorites, only:[:create, :destroy]
+    resources :comments, only: [:create, :destroy]
+    resource :favorites, only: [:create, :destroy]
+  
+    collection do
+      get :drafts
+    end
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

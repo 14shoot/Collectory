@@ -41,6 +41,18 @@
             <h3 class="post-info-title">位置情報</h3>
             <p class="post-info-text">📍 <%= @post.location %></p>
           </div>
+          
+          <!-- 投稿日 -->
+          <div class="post-info-item">
+            <h3 class="post-info-title">投稿日</h3>
+            <p class="post-info-text"><%= @post.created_at.strftime("%Y/%m/%d %H:%M") %></p>
+          </div>
+          
+          <!-- 更新日 -->
+          <div class="post-info-item">
+            <h3 class="post-info-title">更新日</h3>
+            <p class="post-info-text"><%= @post.updated_at.strftime("%Y/%m/%d %H:%M") %></p>
+          </div>
 
           <!-- いいね・投稿者 -->
           <div class="post-info-meta">
@@ -70,8 +82,18 @@
             </div>
 
             <div class="post-info-user">
-              <%= link_to user_path(@post.user) do %>
-                <%= @post.user.name %> ›
+              <%= link_to user_path(@post.user), class: "user-link" do %>
+            
+              <span><%= @post.user.name %></span>
+              
+              <% if @post.user.profile_image.attached? %>
+                  <%= image_tag @post.user.profile_image, class: "user-icon" %>
+                <% else %>
+                  <%= image_tag "no_image.svg", class: "user-icon" %>
+                <% end %>           
+
+                <span>›</span>
+            
               <% end %>
             </div>
 

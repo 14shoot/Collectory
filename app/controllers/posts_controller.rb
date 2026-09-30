@@ -18,8 +18,17 @@ class PostsController < ApplicationController
   end
 
   def index
-    @posts = Post.page(params[:page]).reverse_order
-    @posts = @posts.where('location LIKE ?', "%#{params[:search]}%") if params[:search].present?
+    @posts = Post.published
+  
+    if params[:search].present?
+      @posts = @posts.where("body LIKE ?", "%#{params[:search]}%")
+    end
+  
+    if params[:category_id].present?
+      @posts = @posts.where(category_id: params[:category_id])
+    end
+  
+    @posts = @posts.order(created_at: :desc).page(params[:page])
   end
 
   def show
@@ -47,6 +56,10 @@ class PostsController < ApplicationController
     redirect_to posts_path
   end
 
+  def drafts
+    @posts = current_user.posts.draft.order(updated_at: :desc)
+  end
+
   private
 
   def set_categories
@@ -54,6 +67,13 @@ class PostsController < ApplicationController
   end
 
   def post_params
-    params.require(:post).permit(:category_id, :location, :body, :image)
+    params.require(:post).permit(
+      :category_id,
+      :body,
+      :location,
+      :image,
+      :status
+    )
   end
+
 end
