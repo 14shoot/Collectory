@@ -4,6 +4,11 @@
     <div class="new-post-card mx-auto">
 
       <h1 class="text-center mb-4">新規投稿</h1>
+      <div class="text-end mb-4">
+        <%= link_to "下書き一覧",
+        drafts_posts_path,
+        class: "btn btn-outline-dark" %>
+      </div>
 
       <% if @post.errors.any? %>
         <div class="alert alert-danger">

@@ -28,7 +28,7 @@ class PostsController < ApplicationController
       @posts = @posts.where(category_id: params[:category_id])
     end
   
-    @posts = @posts.order(created_at: :desc).page(params[:page])
+    @posts = @posts.order(created_at: :desc).page(params[:page]).per(12)
   end
 
   def show
@@ -44,8 +44,13 @@ class PostsController < ApplicationController
   def update
     @post = Post.find(params[:id])
     if @post.update(post_params)
-      redirect_to post_path(@post)
+      if @post.draft?
+        redirect_to drafts_posts_path
+      else
+        redirect_to post_path(@post)
+      end
     else
+      @categories = Category.all
       render :edit, status: :unprocessable_entity
     end
   end

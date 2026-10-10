@@ -1,33 +1,118 @@
-<div class="cover-edit">
-  <div class="container">
-    <div class="row">
-      <h1 class="font-weight-normal mt-5 mb-5">投稿編集</h1>
-    </div>
+<div class="cover-show">
+  <div class="container py-5">
+
+    <h1 class="text-center mb-5">投稿編集</h1>
+
     <% if @post.errors.any? %>
-      <div class="card text-center text-white bg-danger mb-3">
+      <div class="alert alert-danger">
         <%= @post.errors.count %>件のエラーが発生しました
+
         <% @post.errors.full_messages.each do |message| %>
-          <%= message %>
+          <p><%= message %></p>
         <% end %>
       </div>
     <% end %>
-  <%= form_with model: @post, local: true do |f| %>
-  <h4>カテゴリー</h4>
-  <%= f.collection_select :category_id, @categories, :id, :name,
-      { prompt: "選択してください" } %>
 
-  <h4>商品名</h4>
-  <%= f.text_field :body %>
+    <div class="row justify-content-center">
 
-  <h4>場所</h4>
-  <%= f.text_field :location %>
+      <div class="col-md-6">
 
-  <h4>画像</h4>
-  <% if @post.image.attached? %>
-    <%= image_tag @post.image, class: "post-thumb" %>
-  <% end %>
-  <h4>画像を変更する場合は選択してください</h4>
-  <%= f.file_field :image %>
+        <div class="post-card">
 
-  <%= f.submit "更新する" %>
-<% end %>
+          <%= form_with model: @post, local: true do |f| %>
+
+            <!-- 現在の画像 -->
+            <% if @post.image.attached? %>
+              <%= image_tag @post.image, class: "post-detail" %>
+            <% end %>
+
+
+            <!-- 画像変更 -->
+            <div class="post-info-item">
+              <h3 class="post-info-title">画像</h3>
+
+              <%= f.file_field :image,
+                  class: "form-control" %>
+
+              <p class="mt-2 mb-0">
+                変更する場合のみ画像を選択してください
+              </p>
+            </div>
+
+
+            <!-- 商品情報 -->
+            <div class="post-info-item">
+              <h3 class="post-info-title">商品情報</h3>
+
+              <%= f.text_field :body,
+                  class: "form-control" %>
+            </div>
+
+
+            <!-- カテゴリー -->
+            <div class="post-info-item">
+              <h3 class="post-info-title">カテゴリー</h3>
+
+              <%= f.collection_select :category_id,
+                  @categories,
+                  :id,
+                  :name,
+                  { prompt: "選択してください" },
+                  { class: "form-control" } %>
+            </div>
+
+
+            <!-- 位置情報 -->
+            <div class="post-info-item">
+              <h3 class="post-info-title">位置情報</h3>
+
+              <%= f.text_field :location,
+                  class: "form-control" %>
+            </div>
+
+
+            <!-- 投稿日 -->
+            <div class="post-info-item">
+              <h3 class="post-info-title">投稿日</h3><p class="post-info-text"><%= @post.created_at.strftime("%Y/%m/%d %H:%M") %></p>
+            </div>
+
+
+
+            <!-- 更新ボタン -->
+            <div class="post-info-actions">
+
+            <% if @post.draft? %>
+
+              <%= f.button "公開する",
+                name: "post[status]",
+                value: "published",
+                class: "btn btn-success" %>
+
+              <%= f.button "下書きのまま更新",
+                name: "post[status]",
+                value: "draft",
+                class: "btn btn-outline-secondary" %>
+
+              <% else %>
+
+                <%= f.submit "更新する",
+                  class: "btn btn-success" %>
+
+              <% end %>
+
+              <%= link_to "キャンセル",
+                drafts_posts_path,
+                class: "btn btn-outline-secondary" %>
+
+            </div>
+
+          <% end %>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</div>

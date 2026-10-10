@@ -1,0 +1,19 @@
+.dm-message {
+    max-width: 50%;
+  }
+  
+  .dm-area {
+    padding-bottom: 110px;
+  }
+  
+  .dm-form {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(900px, 100%);
+    background: white;
+    padding: 15px 20px;
+    border-top: 1px solid #ddd;
+    z-index: 1000;
+  }

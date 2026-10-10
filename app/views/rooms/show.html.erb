@@ -1,0 +1,87 @@
+<div class="container mt-4 pb-5">
+    <h2 class="mb-4">DM</h2>
+  
+    <div class="dm-area mb-5">
+      <% @messages.each do |message| %>
+  
+        <% if message.user == current_user %>
+          <div class="d-flex justify-content-end mb-3">
+            <div class="dm-message">
+  
+              <div class="d-flex justify-content-end align-items-center mb-1">
+                <small class="text-muted me-2">
+                  <%= message.created_at.strftime("%Y/%m/%d %H:%M") %>
+                </small>
+  
+                <% if message.user.profile_image.attached? %>
+                  <%= image_tag message.user.profile_image,
+                                size: "40x40",
+                                class: "rounded-circle" %>
+                <% else %>
+                  <%= image_tag "no_image.svg",
+                                size: "40x40",
+                                class: "rounded-circle" %>
+                <% end %>
+              </div>
+  
+              <div class="bg-primary text-white p-3 rounded">
+                <%= message.content %>
+              </div>
+  
+            </div>
+          </div>
+  
+        <% else %>
+  
+          <div class="d-flex justify-content-start mb-3">
+            <div class="dm-message">
+  
+              <div class="d-flex align-items-center mb-1">
+                <% if message.user.profile_image.attached? %>
+                  <%= image_tag message.user.profile_image,
+                                size: "40x40",
+                                class: "rounded-circle me-2" %>
+                <% else %>
+                  <%= image_tag "no_image.svg",
+                                size: "40x40",
+                                class: "rounded-circle me-2" %>
+                <% end %>
+  
+                <strong><%= message.user.name %></strong>
+  
+                <small class="text-muted ms-2">
+                  <%= message.created_at.strftime("%Y/%m/%d %H:%M") %>
+                </small>
+              </div>
+  
+              <div class="bg-light p-3 rounded">
+                <%= message.content %>
+              </div>
+  
+            </div>
+          </div>
+  
+        <% end %>
+  
+      <% end %>
+    </div>
+  
+    <div class="dm-form">
+      <%= form_with model: @message,
+                    url: messages_path,
+                    local: true do |f| %>
+  
+        <%= f.hidden_field :room_id, value: @room.id %>
+  
+        <div class="d-flex">
+          <%= f.text_area :content,
+                          class: "form-control me-2",
+                          rows: 2,
+                          placeholder: "メッセージを入力" %>
+  
+          <%= f.submit "送信", class: "btn btn-primary" %>
+        </div>
+  
+      <% end %>
+    </div>
+  </div>

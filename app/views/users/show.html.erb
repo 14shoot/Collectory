@@ -12,9 +12,13 @@
             <%= link_to "プロフィール編集", edit_user_path(@user), class: "btn btn-success" %>
         </p>
       <% end %>
-      <% if current_user != @user %>
+      <% if user_signed_in? && current_user != @user %>
       <% if current_user.following?(@user) %>
         <p class="d-flex align-self-end">
+          <%= link_to "DMを送る",
+            rooms_path(user_id: @user.id),
+            data: { turbo_method: :post },
+            class: "btn btn-primary" %>
           <%= link_to 'フォロー外す', user_relationship_path(@user.id),  data: { turbo_method: :delete }, class: "btn btn-danger" %>
         </p>
         <% else %>
